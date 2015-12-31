@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   h1 #{user}
-  form(action='/profile' method='post')
+  form(action='/users/profile' method='post')
     label(for='username') Username
       input(type='text' name='username' value=username)
     label(for='first_name') First Name
