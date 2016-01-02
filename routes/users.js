@@ -6,13 +6,24 @@ var knex = require('knex')({
 });
 var account = require('../local_modules/account');
 
-/* GET users listing. */
+var unique;
+function uniqueUsername(username) {
+  knex('preferences').where('username', username).then(function(info) {
+    if (info.length === 0) {
+      unique = 2;
+    } else {
+      unique = 1;
+    }
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
 router.get('/profile', function(req, res, next) {
-
   //temporary user for testing without user sessions
   var user = {
     id: 1,
@@ -20,10 +31,9 @@ router.get('/profile', function(req, res, next) {
     first_name: 'John',
     last_name: 'Smith'
   };
-
   res.render('profile', {
     title: 'Pong',
-    user: user.username+"'s Profile",
+    user: user.username + "'s Profile",
     username: user.username,
     firstName: user.first_name,
     lastName: user.last_name
@@ -32,7 +42,6 @@ router.get('/profile', function(req, res, next) {
 
 router.post('/profile', function(req, res, next) {
   var userSubmission = req.body;
-
   //temporary user for testing without user sessions
   var user = {
     id: 1,
@@ -40,11 +49,13 @@ router.post('/profile', function(req, res, next) {
     first_name: 'John',
     last_name: 'Smith'
   };
-
-  account.update(res, user, userSubmission, knex);
+  uniqueUsername(userSubmission.username);
+  setTimeout(function() {
+    account.update(user, userSubmission, unique, knex);
+  }, 1000);
   res.render('profile', {
     title: 'Pong',
-    user: user.username+"'s Profile",
+    user: user.username + "'s Profile",
     username: user.username,
     firstName: user.first_name,
     lastName: user.last_name
