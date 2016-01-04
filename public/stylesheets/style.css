@@ -1,22 +1,37 @@
 body {
   padding: 50px;
   font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: repeating-linear-gradient(45deg, #606dbc, #606dbc 2rem, #465298 2rem, #23489a 2rem, #465298 6rem) center center no-repeat;
+  height: 100vh;
 }
 
 a {
   color: #00B7FF;
 }
+
 .welcome {
   text-align: center;
   margin-bottom: 5rem;
   margin-top: -1rem;
+  color: #dbdbdb;
+  background-color: rgba(0,0,0,.6);
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  border-radius: 2rem;
+  border-top: 2px outset #434343;
+  border-left: 2px outset #434343;
+  border-right: 2px outset #898989;
+  border-bottom: 2px outset #898989;
 }
 
 .formWrapper {
   text-align: center;
   background-color:  #29a3a3;
   border-radius: 5rem;
-  box-shadow: -.2rem -.2rem .2rem .2rem #078181;
+  /*box-shadow: -.2rem -.2rem .2rem .2rem #078181;*/
+  border: 2px outset #3ab4b4;
 }
 
 .inputText {
