@@ -6,19 +6,6 @@ var knex = require('knex')({
 });
 var account = require('../local_modules/account');
 
-var unique;
-function uniqueUsername(username) {
-  knex('preferences').where('username', username).then(function(info) {
-    if (info.length === 0) {
-      unique = 2;
-    } else {
-      unique = 1;
-    }
-  }).catch(function(error) {
-    console.log(error);
-  });
-}
-
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
@@ -49,17 +36,15 @@ router.post('/profile', function(req, res, next) {
     first_name: 'John',
     last_name: 'Smith'
   };
-  uniqueUsername(userSubmission.username);
-  setTimeout(function() {
-    account.update(user, userSubmission, unique, knex);
-  }, 1000);
-  res.render('profile', {
-    title: 'Pong',
-    user: user.username + "'s Profile",
-    username: user.username,
-    firstName: user.first_name,
-    lastName: user.last_name
-  });
+  req.flash('info');
+  account.uniqueUsername(req, res, user, userSubmission, knex, account.update);
+  // res.render('profile', {
+  //   title: 'Pong',
+  //   user: user.username + "'s Profile",
+  //   username: user.username,
+  //   firstName: user.first_name,
+  //   lastName: user.last_name
+  // });
 });
 
 module.exports = router;
