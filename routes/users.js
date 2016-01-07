@@ -36,15 +36,39 @@ router.post('/profile', function(req, res, next) {
     first_name: 'John',
     last_name: 'Smith'
   };
-  req.flash('info');
-  account.uniqueUsername(req, res, user, userSubmission, knex, account.update);
-  // res.render('profile', {
-  //   title: 'Pong',
-  //   user: user.username + "'s Profile",
-  //   username: user.username,
-  //   firstName: user.first_name,
-  //   lastName: user.last_name
-  // });
+  account.getMatchingUsernames(userSubmission, knex)
+  .then(function(matchingUsers) {
+    if (account.validUsername(userSubmission, user, matchingUsers)) {
+      if(account.update(user, userSubmission, knex)) {
+        res.render('profile', {
+          message: 'it worked',
+          title: 'Pong',
+          user: user.username + "'s Profile",
+          username: user.username,
+          firstName: user.first_name,
+          lastName: user.last_name
+        });
+      } else {
+        res.render('profile', {
+          message: 'Invalid First or Last Name',
+          title: 'Pong',
+          user: user.username + "'s Profile",
+          username: user.username,
+          firstName: user.first_name,
+          lastName: user.last_name
+        });
+      }
+    } else {
+      res.render('profile', {
+        message: userSubmission.username+' is not available',
+        title: 'Pong',
+        user: user.username + "'s Profile",
+        username: user.username,
+        firstName: user.first_name,
+        lastName: user.last_name
+      });
+    }
+  });
 });
 
 router.get('/signup', function(req, res, next) {
