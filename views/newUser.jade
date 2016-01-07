@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h2(class='welcome welcome-newuser') Let's get started
+  div(class='row')
+    div(class='formWrapper col-md-6 col-md-offset-3')
+      form(action='/signup' method='post')
+        input(class='inputText', type='text', name='firstname', placeholder='First Name')
+        br
+        input(class='inputText', type='text', name='lastname', placeholder='Last Name')
+        br
+        input(class='inputText', type='email', name='email', placeholder='Email')
+        br
+        input(class='inputText',type='text', name='username', placeholder='Username')
+        br
+        input(class='inputText', type='password', name='password', placeholder='Password')
+        br
+        input(class='inputText', type='password', name='passwordTwo', placeholder='Confirm Password')
+        br
+        input(class='btn btn-default', type='submit', name='submit', value='submit')
