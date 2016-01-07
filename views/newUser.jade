@@ -4,17 +4,19 @@ block content
   h2(class='welcome welcome-newuser') Let's get started
   div(class='row')
     div(class='formWrapper col-md-6 col-md-offset-3')
-      form(action='/signup' method='post')
-        input(class='inputText', type='text', name='firstname', placeholder='First Name')
+      form(action='/users/signup' method='post')
+        input(class='inputText', type='text', name='firstname', placeholder='First Name', value= firstname)
         br
-        input(class='inputText', type='text', name='lastname', placeholder='Last Name')
+        input(class='inputText', type='text', name='lastname', placeholder='Last Name', value= lastname)
         br
-        input(class='inputText', type='email', name='email', placeholder='Email')
+        input(class='inputText', type='email', name='email', placeholder='Email', value= email)
         br
-        input(class='inputText',type='text', name='username', placeholder='Username')
+        input(class='inputText',type='text', name='username', placeholder='Username', value= username)
         br
         input(class='inputText', type='password', name='password', placeholder='Password')
+        label(value= passerr)
         br
         input(class='inputText', type='password', name='passwordTwo', placeholder='Confirm Password')
+        label(value= passerr)
         br
         input(class='btn btn-default', type='submit', name='submit', value='submit')
