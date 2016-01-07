@@ -69,8 +69,6 @@ router.post('/profile', function(req, res, next) {
       });
     }
   });
-  //account.update(user, userSubmission, knex, account.uniqueUsername);
-  //account.uniqueUsername(req, res, user, userSubmission, knex, account.update);
 });
 
 module.exports = router;
