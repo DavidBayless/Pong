@@ -13,10 +13,10 @@ block content
         br
         input(class='inputText',type='text', name='username', placeholder='Username', value= username)
         br
-        input(class='inputText', type='password', name='password', placeholder='Password')
-        label(value= passerr)
+        input(id='password' class='inputText', type='password', name='password', placeholder='Password')
+        label(class='newUserLabel' for='password')= passerr
         br
         input(class='inputText', type='password', name='passwordTwo', placeholder='Confirm Password')
-        label(value= passerr)
+        label(class='newUserLabel' for='passwordTwo')= passerr
         br
         input(class='btn btn-default', type='submit', name='submit', value='submit')

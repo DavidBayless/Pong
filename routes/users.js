@@ -53,12 +53,14 @@ router.get('/signup', function(req, res, next) {
 
 router.post('/signup', function(req, res, next) {
   console.log(req.body);
+  var passerr = '';
   if(req.body.firstname && req.body.lastname && req.body.username && req.body.email && req.body.password && req.body.passwordTwo) {
     if (req.body.password === req.body.passwordTwo) {
       res.redirect('/users/profile');
     } else {
-      res.render('newUser', {firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, email: req.body.email, passerr: "passwords don't match"});
+      passerr = 'Passwords do not match';
     }
+    if (account.validUsername(req.body.username))
   } else {
     res.render('newUser', {firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, email: req.body.email});
   }
