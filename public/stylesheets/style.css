@@ -26,17 +26,23 @@ a {
   border-bottom: 2px outset #898989;
 }
 
+.welcome-newuser {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
 .formWrapper {
   text-align: center;
   background-color:  #29a3a3;
   border-radius: 5rem;
   box-shadow: -.2rem -.2rem .2rem .2rem #078181;
   border: 2px outset #3ab4b4;
+  margin-bottom: 5rem;
 }
 
 .inputText {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   width: 30rem;
   line-height: 2.5rem;
 }

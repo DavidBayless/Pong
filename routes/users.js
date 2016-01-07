@@ -47,4 +47,8 @@ router.post('/profile', function(req, res, next) {
   // });
 });
 
+router.get('/signup', function(req, res, next) {
+  res.render('newUser');
+});
+
 module.exports = router;
