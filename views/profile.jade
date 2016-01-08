@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  h1 #{user}
+  form(action='/users/profile' method='post')
+    label(for='username') Username
+      input(type='text' name='username' value=username)
+    label(for='first_name') First Name
+      input(type='text' name='first_name' value=firstName)
+    label(for='last_name') Last Name
+      input(type='text' name='last_name' value=lastName)
+    label(for='current_password') Current Password
+      input(type='password' name='current_password')
+    label(for='new_password') New Password
+      input(type='password' name='new_password')
+    label(for='confirm_new_password') Confirm New Password
+      input(type='password' name='confirm_new_password')
+    button(type="submit") Update Profile

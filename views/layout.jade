@@ -2,6 +2,9 @@ doctype html
 html
   head
     title= title
+    link(href='/favicon.ico', type='image/ico', rel='shortcut icon')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    h1= message
     block content
