@@ -1,38 +1,86 @@
 var account = {
-  update: function(user, submission, knex) {
-    if (account.validName(submission.first_name) &&
-      account.validName(submission.last_name)
-    ) {
-      if (submission.username) {
-        knex('preferences').where({
-          id: user.id
-        }).update({
-          username: submission.username
-        }).then(function() {}).catch(function(error) {
-          console.log(error);
-        });
+  update: function(user, submission, matches, knex) {
+    return new Promise(function(resolve, reject){
+      if(account.validUsername(submission, matches)) {
+        console.log('validUsername');
+        if(account.validName(submission.first_name)) {
+          if(account.validName(submission.last_name)) {
+            var updateUsername = function() {
+              return knex('preferences').where({
+                id: user.id
+              }).update({
+                username: submission.username
+              });
+            };
+            var updateFirstName = function() {
+              return knex('preferences').where({
+                id: user.id
+              }).update({
+                first_name: submission.first_name
+              });
+            };
+            var updateLastName = function() {
+              return knex('preferences').where({
+                id: user.id
+              }).update({
+                last_name: submission.last_name
+              });
+            };
+            Promise.all([
+              updateUsername(),
+              updateFirstName(),
+              updateLastName()
+            ]).then(function(info){
+              resolve(info);
+            });
+          } else {
+            reject('Invalid Last Name');
+          }
+        } else {
+          reject('Invalid First Name');
+        }
+      } else {
+        reject('Invalid Username');
       }
-      if (submission.first_name) {
-        knex('preferences').where({
-          id: user.id
-        }).update({
-          first_name: submission.first_name
-        }).then(function() {}).catch(function(error) {
-          console.log(error);
-        });
-      }
-      if (submission.last_name) {
-        knex('preferences').where({
-          id: user.id
-        }).update({
-          last_name: submission.last_name
-        }).then(function() {}).catch(function(error) {
-          console.log(error);
-        });
-      }
-      return true;
-    }
+    });
   },
+
+    //   if (account.validName(submission.first_name) &&
+    //     account.validName(submission.last_name) &&
+    //     account.validUsername(userSubmission, user, matchingUsers)
+    //   ) {
+    //     var updateUsername = function() {
+    //       return knex('preferences').where({
+    //         id: user.id
+    //       }).update({
+    //         username: submission.username
+    //       });
+    //     };
+    //     var updateFirstName = function() {
+    //       return knex('preferences').where({
+    //         id: user.id
+    //       }).update({
+    //         first_name: submission.first_name
+    //       });
+    //     };
+    //     var updateLastName = function() {
+    //       return knex('preferences').where({
+    //         id: user.id
+    //       }).update({
+    //         last_name: submission.last_name
+    //       });
+    //     };
+    //     Promise.all([
+    //       updateUsername(),
+    //       updateFirstName(),
+    //       updateLastName()
+    //     ]).then(function(info){
+    //       resolve(info);
+    //     });
+    //   } else {
+    //     reject('error');
+    //   }
+    // });
   validName: function(name) {
     if (name.length < 17) {
       //checks if the name is only letters
@@ -41,7 +89,7 @@ var account = {
       }
     }
   },
-  validUsername: function(submission, user, matches) {
+  validUsername: function(submission, matches) {
     if (!matches.length) {
       if (submission.username.length < 25 && submission.username.length > 3) {
         return true;
