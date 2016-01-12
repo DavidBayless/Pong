@@ -29,6 +29,7 @@ router.get('/profile', function(req, res, next) {
 
 router.post('/profile', function(req, res, next) {
   var userSubmission = req.body;
+  var message;
   //temporary user for testing without user sessions
   var user = {
     id: 1,
@@ -36,17 +37,14 @@ router.post('/profile', function(req, res, next) {
     first_name: 'John',
     last_name: 'Smith'
   };
-
   account.getMatchingUsernames(userSubmission, knex)
     .then(function(matchingUsers) {
-      account.update(user, userSubmission, matchingUsers, knex).then(function(info) {
-        console.log(info);
+      account.update(user, userSubmission, matchingUsers, knex)
+      .then(function(){
         return 'Success';
       }).catch(function(error) {
-        console.log(error);
         return error;
       }).then(function(message) {
-        console.log(message);
         res.render('profile', {
           message: message,
           title: 'Pong',
@@ -58,6 +56,8 @@ router.post('/profile', function(req, res, next) {
       });
     });
 });
+
+
 
 router.get('/signup', function(req, res, next) {
   res.render('newUser');
@@ -73,7 +73,7 @@ router.post('/signup', function(req, res, next) {
   var firstnameGo = false;
   var lastnameerr = '';
   var lastnameGo = false;
-  if(req.body.firstname && req.body.lastname && req.body.username && req.body.email && req.body.password && req.body.passwordTwo) {
+  if (req.body.firstname && req.body.lastname && req.body.username && req.body.email && req.body.password && req.body.passwordTwo) {
     if (req.body.password === req.body.passwordTwo) {
       passGo = true;
     } else {
@@ -91,7 +91,7 @@ router.post('/signup', function(req, res, next) {
 
     if (account.validName(req.body.firstname)) {
       firstnameGo = true;
-    } else if (req.body.firstname.length > 17){
+    } else if (req.body.firstname.length > 17) {
       firstnameerr = 'First name is too long';
     } else if (/[\*,&^%$#@!)(-+\s|}{\\`~/?><.';:"0-9]/g.test(req.body.firstname)) {
       firstnameerr = 'Name can only be letters';
@@ -99,7 +99,7 @@ router.post('/signup', function(req, res, next) {
 
     if (account.validName(req.body.lastname)) {
       lastnameGo = true;
-    } else if (req.body.lastname.length > 17){
+    } else if (req.body.lastname.length > 17) {
       lastnameerr = 'Last name is too long';
     } else if (/[\*,&^%$#@!)(-+\s|}{\\`~/?><.';:"0-9]/g.test(req.body.lastname)) {
       lastnameerr = 'Name can only be letters';
@@ -108,10 +108,24 @@ router.post('/signup', function(req, res, next) {
     if (passGo && usernameGo && firstnameGo && lastnameGo) {
       res.redirect('profile');
     } else {
-      res.render('newUser', {firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, email: req.body.email, passerr: passerr, usernameerr: usernameerr, firstnameerr: firstnameerr, lastnameerr: lastnameerr});
+      res.render('newUser', {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        username: req.body.username,
+        email: req.body.email,
+        passerr: passerr,
+        usernameerr: usernameerr,
+        firstnameerr: firstnameerr,
+        lastnameerr: lastnameerr
+      });
     }
   } else {
-    res.render('newUser', {firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, email: req.body.email});
+    res.render('newUser', {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      username: req.body.username,
+      email: req.body.email
+    });
   }
 });
 
